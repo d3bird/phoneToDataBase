@@ -2,17 +2,21 @@ page-home {
   .anonymousUserImageIcon {
     font-size: 3.5rem;
   }
+  .padding{
+    background-color:yellowgreen;
+
+  }
   ion-footer {
     position: fixed;
     #current-message-input {
       width: 100%;
       background-color:transparent;
       border: black;
-
+     font: 100% Helvetica, sans-serif;
     }
   }
 .message-from-other-user {
-
+font: 100% Helvetica, sans-serif;
 background-color: cornflowerblue;
 border:black;
     }
