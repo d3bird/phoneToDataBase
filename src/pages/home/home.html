@@ -14,7 +14,7 @@
 
 <ion-content class ="padding">
   <ion-list>
-    <ion-item [ngClass]="{'message-from-other-user': message.userName !== USER_NAME_CONSTANT}" *ngFor= "let message of messageService.messages | async" >
+    <ion-item class ="messageitem" [ngClass]="{'message-from-other-user': message.userName !== USER_NAME_CONSTANT}" *ngFor= "let message of messageService.messages | async" >
       <ion-avatar item-left>
         <ion-icon class="anonymousUserImageIcon" name="person"></ion-icon>
       </ion-avatar>
