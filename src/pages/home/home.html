@@ -1,3 +1,9 @@
+<!--
+  Generated template for the Home page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
 <ion-header>
   <ion-navbar>
     <ion-title>
@@ -8,36 +14,20 @@
 
 <ion-content padding>
   <ion-list>
-    <ion-item [ngClass]="{'message-from-other-user': message.userName !== USER_NAME_CONSTANT}" *ngFor="let message of messageService.messages | async">
+    <ion-item *ngFor="let message of messageService.messages | async">
       <ion-avatar item-left>
         <ion-icon class="anonymousUserImageIcon" name="person"></ion-icon>
       </ion-avatar>
       <p>{{message.userName}}</p>
-      <h2 *ngIf="isThisMessageSimpleText(message)" [innerHTML]="message.messageContent | linky:{newWindow: false}"></h2>
-      <img *ngIf="doesThisMessageContainAnImage(message)" [src]="getImageFromMessageContent(message)" />
-      <a *ngIf="doesThisMessageContainLocationData(message)" [href]="getLocationUrlFromMessageContent(message)" target="_blank">
-        <ion-icon name="locate"></ion-icon> Click here for location
-      </a>
+      <h2>{{message.messageContent}}</h2>
       <ion-note item-right>{{formatDateTo_hhmm(message.messageDate)}}</ion-note>
     </ion-item>
   </ion-list>
 </ion-content>
 <ion-footer>
-  <ion-toolbar>
-    <ion-item>
-      <button (click)="showAdditionalIcons = !showAdditionalIcons" item-left ion-button>
-        <ion-icon *ngIf="!showAdditionalIcons" name="arrow-forward"></ion-icon>
-        <ion-icon *ngIf="showAdditionalIcons" name="arrow-back"></ion-icon>
-      </button>
-      <button *ngIf="showAdditionalIcons" (click)="sendPhoto()" item-left ion-button>
-          <ion-icon name="camera"></ion-icon>
-      </button>
-      <button *ngIf="showAdditionalIcons" (click)="sendLocation()" item-left ion-button>
-        <ion-icon name="locate"></ion-icon>
-      </button>
-      <!-- Not using ion-input due to undesirable keyboard behavior -->
-      <input id="current-message-input" [(ngModel)]="currentMessage" type="text" placeholder="Message" />
-      <button (click)="send()" item-right ion-button>SEND</button>
-    </ion-item>
-  </ion-toolbar>
+  <ion-item>
+    <!-- Not using ion-input due to undesirable keyboard behavior -->
+    <input id="current-message-input" [(ngModel)]="currentMessage" type="text" placeholder="Message" />
+    <button (click)="send()" item-right ion-button>SEND</button>
+  </ion-item>
 </ion-footer>

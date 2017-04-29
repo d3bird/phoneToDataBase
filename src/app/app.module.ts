@@ -6,8 +6,12 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 
+
 import { AngularFireModule } from 'angularfire2';
 import { LinkyModule } from 'angular-linky';
+
+
+
 
 export const firebaseConfig = {
   apiKey: "AIzaSyCxf5Zqvf_19Hg2d8h9Fp8HM7qiTBrVpIM",
@@ -16,6 +20,10 @@ export const firebaseConfig = {
   storageBucket: "fusecodecampchat-open.appspot.com",
   messagingSenderId: "879480049917"
 };
+
+
+
+
 
 @NgModule({
   declarations: [

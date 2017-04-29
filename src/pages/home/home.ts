@@ -1,29 +1,19 @@
 import { Component } from '@angular/core';
-import { NavController, Platform } from 'ionic-angular';
+import { NavController } from 'ionic-angular';
 import { Message } from '../../models/message'
 import { MessageService } from '../../providers/message-service'
-import { Geolocation } from '@ionic-native/geolocation';
-import { Camera, CameraOptions } from '@ionic-native/camera';
 import * as moment from 'moment';
-
-export const imageContentPrefix = 'data:image/jpeg;base64,';
-export const locationDataContentPrefix = 'geo:';
-export const appleMapsUrlPrefix = "https://maps.apple.com/?q=";
-export const googleMapsUrlPrefix = "https://maps.google.com/maps?q=loc:";
-
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html',
-  providers: [MessageService, Camera, Geolocation]
+  providers: [MessageService]
 })
 export class HomePage {
-  public USER_NAME_CONSTANT = 'John Ryan';
+  public USER_NAME_CONSTANT = 'Scott Crawford';
   public currentMessage: string;
-  public showAdditionalIcons: boolean;
 
-  constructor(public navCtrl: NavController, private messageService: MessageService, private camera: Camera, private geolocation: Geolocation, public platform: Platform) {
-    this.showAdditionalIcons = false;
+  constructor(public navCtrl: NavController, private messageService: MessageService) {
   }
 
   public formatDateTo_hhmm(dateProvidedAsString: string) {
@@ -38,62 +28,8 @@ export class HomePage {
   private buildAndSendMessage(message: string) {
     var newMessage = new Message();
     newMessage.userName = this.USER_NAME_CONSTANT;
-    newMessage.messageContent = message;
+    newMessage.messageContent = this.currentMessage;
     this.messageService.addMessage(newMessage);
   }
-
-  public sendPhoto() {
-    let options: CameraOptions = {
-      destinationType: this.camera.DestinationType.DATA_URL,
-      encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE,
-      targetWidth: 600,
-      targetHeight: 400
-    }
-
-    this.camera.getPicture(options).then((imageData) => {
-      let base64Image = imageContentPrefix + imageData.replace(/[\n\r]/g, '');
-      this.buildAndSendMessage(base64Image);
-      this.showAdditionalIcons = false;
-    }, (error) => {
-      this.buildAndSendMessage('photo capture error: ' + JSON.stringify(error));
-      this.showAdditionalIcons = false;
-    });
-  }
-
-  public sendLocation() {
-    this.geolocation.getCurrentPosition().then((resp) => {
-      this.buildAndSendMessage(locationDataContentPrefix + resp.coords.latitude + ',' + resp.coords.longitude);
-      this.showAdditionalIcons = false;
-    }).catch((error) => {
-      this.buildAndSendMessage('error getting location: ' + JSON.stringify(error));
-      this.showAdditionalIcons = false;
-    });
-  }
-
-  public getImageFromMessageContent(message: Message) {
-    // Added this function so that I don't get errors in the console when the img tag
-    // tries to render an image from not-image data.
-    return this.doesThisMessageContainAnImage(message) ? message.messageContent : "";
-  }
-
-  public getLocationUrlFromMessageContent(message: Message) {
-    let suffixToUse = message.messageContent.substr(locationDataContentPrefix.length);
-    if (this.platform.is('ios')) {
-      return appleMapsUrlPrefix + suffixToUse;
-    }
-    return googleMapsUrlPrefix + suffixToUse;
-  }
-
-  public isThisMessageSimpleText(message: Message) {
-    return !this.doesThisMessageContainAnImage(message) && !this.doesThisMessageContainLocationData(message);
-  }
-
-  public doesThisMessageContainAnImage(message: Message) {
-    return message.messageContent.indexOf(imageContentPrefix) !== -1;
-  }
-
-  public doesThisMessageContainLocationData(message: Message) {
-    return message.messageContent.indexOf(locationDataContentPrefix) !== -1;
-  }
 }
+
