@@ -19,8 +19,9 @@
         <ion-icon class="anonymousUserImageIcon" name="person"></ion-icon>
       </ion-avatar>
        <p>{{message.userName}}</p>
-      <h2 *ngIf="!doesThisMessageContainAnImage(message)" [innerHTML]="message.messageContent | linky:{newWindow: false}"></h2>
+      <h2 *ngIf="!doesThisMessageContainAnImage(message)&& message.messageContent.indexOf('geo:') ===-1" [innerHTML]="message.messageContent | linky:{newWindow: false}"></h2>
       <img *ngIf="doesThisMessageContainAnImage(message)" [src]="getImageFromMessageContent(message)" />
+      <a  *ngIf="message.messageContent.indexOf('geo:') !==-1" [href]="displayGeo(message.messageContent)">see location</a>
       <ion-note item-right>{{formatDateTo_hhmm(message.messageDate)}}</ion-note>
     </ion-item>
   </ion-list>
@@ -31,7 +32,7 @@
   
     <!-- Not using ion-input due to undesirable keyboard behavior -->
           <button (click)="getPhoto()" item-left ion-button><ion-icon name="camera"></ion-icon></button>
-
+          <button (click)="getLocation()" item-left ion-button><ion-icon name="globe"></ion-icon></button> 
     <input id="current-message-input" [(ngModel)]="currentMessage" type="text" placeholder="Message" />
     <button (click)="send()" item-right ion-button><ion-icon name="send"></ion-icon></button>
   </ion-item>

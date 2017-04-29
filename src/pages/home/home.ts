@@ -5,18 +5,20 @@ import { MessageService } from '../../providers/message-service'
 import * as moment from 'moment';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 
+import { Geolocation } from '@ionic-native/geolocation';
+import { Platform } from 'ionic-angular';
 export const imageContentPrefix = 'data:image/jpeg;base64,';
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html',
-  providers: [MessageService, Camera]
+  providers: [MessageService, Camera, Geolocation,Platform]
 })
 export class HomePage {
   public USER_NAME_CONSTANT = 'Scott Crawford';
   public currentMessage: string;
 
-  constructor(public navCtrl: NavController, private messageService: MessageService, private camera: Camera) {
+  constructor(public navCtrl: NavController, private messageService: MessageService, private camera: Camera, private geolocation: Geolocation,public plt: Platform) {
   }
 
   public formatDateTo_hhmm(dateProvidedAsString: string) {
@@ -28,10 +30,10 @@ export class HomePage {
     this.currentMessage = "";
   }
 
-   public doesThisMessageContainAnImage(message: Message) {
+  public doesThisMessageContainAnImage(message: Message) {
     return message.messageContent.indexOf(imageContentPrefix) !== -1;
   }
-public getImageFromMessageContent(message: Message) {
+  public getImageFromMessageContent(message: Message) {
     return this.doesThisMessageContainAnImage(message) ? message.messageContent : "";
   }
   public getPhoto() {
@@ -62,5 +64,35 @@ public getImageFromMessageContent(message: Message) {
     newMessage.messageContent = message;
     this.messageService.addMessage(newMessage);
   }
+
+  public displayGeo(temp:string){
+    let lat :string = temp.substring(4,temp.indexOf(","));
+    let long:string= temp.substring(temp.indexOf(",")+1);
+    let output:string="";
+
+    if(this.plt.is('ios')){
+    output =  'https://maps.apple.com/?q='+lat+','+long;
+    }else{
+   output=   'https://maps.google.com/maps?q=loc:'+lat+','+long;
+    }
+     return output;
+
+  }
+
+  
+  public getLocation() {
+    this.geolocation.getCurrentPosition().then((resp) => {
+      // resp.coords.latitude
+      // resp.coords.longitude
+      let temp: string = "geo" + ":" + resp.coords.latitude + "," + resp.coords.longitude;
+     // this.buildAndSendMessage(temp);
+     this.buildAndSendMessage(temp);
+    }).catch((error) => {
+      console.log('Error getting location', error);
+    });
+
+
+  }
+
 }
 

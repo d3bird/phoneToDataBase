@@ -16,11 +16,12 @@ import { LinkyModule } from 'angular-linky';
 
 
 export const firebaseConfig = {
-  apiKey: "AIzaSyCxf5Zqvf_19Hg2d8h9Fp8HM7qiTBrVpIM",
-  authDomain: "fusecodecampchat-open.firebaseapp.com",
-  databaseURL: "https://fusecodecampchat-open.firebaseio.com",
-  storageBucket: "fusecodecampchat-open.appspot.com",
-  messagingSenderId: "879480049917"
+  apiKey: "AIzaSyBijqkirye06jhdJgHkcO8pkqn0wv-srFU",
+    authDomain: "seversidecomands.firebaseapp.com",
+    databaseURL: "https://seversidecomands.firebaseio.com",
+    projectId: "seversidecomands",
+    storageBucket: "seversidecomands.appspot.com",
+    messagingSenderId: "1077831140466"
 };
 
 
