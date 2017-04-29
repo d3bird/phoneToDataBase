@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
 import { Message } from '../models/message'
-import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 /*

@@ -7,14 +7,14 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      Fuse Code Camp
+      The sever to speak to many people
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
   <ion-list>
-    <ion-item *ngFor="let message of messageService.messages | async">
+    <ion-item [ngClass]="{'message-from-other-user': message.userName !== USER_NAME_CONSTANT}" *ngFor= "let message of messageService.messages | async" >
       <ion-avatar item-left>
         <ion-icon class="anonymousUserImageIcon" name="person"></ion-icon>
       </ion-avatar>
@@ -31,3 +31,4 @@
     <button (click)="send()" item-right ion-button>SEND</button>
   </ion-item>
 </ion-footer>
+

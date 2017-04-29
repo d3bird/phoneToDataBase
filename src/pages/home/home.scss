@@ -6,8 +6,16 @@ page-home {
     position: fixed;
     #current-message-input {
       width: 100%;
-      background-color: transparent;
-      border: none;
+      background-color:transparent;
+      border: black;
+
     }
   }
+.message-from-other-user {
+
+background-color: blue;
+border:black;
+    }
+
+    
 }
