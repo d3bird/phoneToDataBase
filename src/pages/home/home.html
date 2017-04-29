@@ -26,12 +26,13 @@
 </ion-content>
 <ion-footer>
   <ion-item>
-      <button (click)="getPhoto()" item-left ion-button>SEND</button>
-  </ion-item>
-  <ion-item>
+      
+  
     <!-- Not using ion-input due to undesirable keyboard behavior -->
+          <button (click)="getPhoto()" item-left ion-button><ion-icon name="camera"></ion-icon></button>
+
     <input id="current-message-input" [(ngModel)]="currentMessage" type="text" placeholder="Message" />
-    <button (click)="send()" item-right ion-button>SEND</button>
+    <button (click)="send()" item-right ion-button><ion-icon name="send"></ion-icon></button>
   </ion-item>
 </ion-footer>
 
