@@ -38,8 +38,26 @@ export class HomePage {
   }
 
 public randomTest(){
+let output:string;
+let command:string[];
+
+if (this.currentMessage.indexOf(',')===-1){
+ command= this.currentMessage.split(",");
+}else{
 
 
+}
+switch (command[0]){// input command code for the backend to take down
+case'test':output= 'test command';
+break;
+
+
+default:output = 'not a real command';
+break;
+}
+
+ this.currentMessage = "";
+this.buildAndSendMessage(output);
 }
 
   public getPhoto() {
