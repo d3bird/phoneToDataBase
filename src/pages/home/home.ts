@@ -12,13 +12,13 @@ export const imageContentPrefix = 'data:image/jpeg;base64,';
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html',
-  providers: [MessageService, Camera, Geolocation,Platform]
+  providers: [MessageService, Camera, Geolocation, Platform]
 })
 export class HomePage {
   public USER_NAME_CONSTANT = 'Scott Crawford';
   public currentMessage: string;
 
-  constructor(public navCtrl: NavController, private messageService: MessageService, private camera: Camera, private geolocation: Geolocation,public plt: Platform) {
+  constructor(public navCtrl: NavController, private messageService: MessageService, private camera: Camera, private geolocation: Geolocation, public plt: Platform) {
   }
 
   public formatDateTo_hhmm(dateProvidedAsString: string) {
@@ -37,28 +37,41 @@ export class HomePage {
     return this.doesThisMessageContainAnImage(message) ? message.messageContent : "";
   }
 
-public randomTest(){
-let output:string;
-let command:string[];
+  public commandTranslate() {
+    let output: string = "";
+    let command: string[];
 
-if (this.currentMessage.indexOf(',')===-1){
- command= this.currentMessage.split(",");
-}else{
+   
+      command = this.currentMessage.split(" ");
+    
+    
+   let i=0;
+    while ( i < command.length) {
 
-
-}
-switch (command[0]){// input command code for the backend to take down
-case'test':output= 'test command';
-break;
-
-
-default:output = 'not a real command';
-break;
-}
-
- this.currentMessage = "";
-this.buildAndSendMessage(output);
-}
+      switch (command[i]) {// input command code for the backend to take down
+        case 'sunney': command[i] = 'snn';//sunney
+          break;
+          case 'rain': command[i] = 'rn';//rainey
+          break;
+          case 'storm': command[i] = 'strm';//storm
+          break;
+        default: command[i] = 'fake';
+          break;
+      }
+      i++;
+    }
+    for (let x = 0; x < command.length; x++) {
+      if (x === command.length - 1) {
+        output += command[x];
+      } else if (command[x].indexOf('fake')===-1 ){
+    output += command[x] + ",";
+        }
+       
+      
+    }
+    this.currentMessage = "";
+    this.buildAndSendMessage(output);
+  }
 
   public getPhoto() {
 
@@ -89,28 +102,28 @@ this.buildAndSendMessage(output);
     this.messageService.addMessage(newMessage);
   }
 
-  public displayGeo(temp:string){
-    let lat :string = temp.substring(4,temp.indexOf(","));
-    let long:string= temp.substring(temp.indexOf(",")+1);
-    let output:string="";
+  public displayGeo(temp: string) {
+    let lat: string = temp.substring(4, temp.indexOf(","));
+    let long: string = temp.substring(temp.indexOf(",") + 1);
+    let output: string = "";
 
-    if(this.plt.is('ios')){
-    output =  'https://maps.apple.com/?q='+lat+','+long;
-    }else{
-   output=   'https://maps.google.com/maps?q=loc:'+lat+','+long;
+    if (this.plt.is('ios')) {
+      output = 'https://maps.apple.com/?q=' + lat + ',' + long;
+    } else {
+      output = 'https://maps.google.com/maps?q=loc:' + lat + ',' + long;
     }
-     return output;
+    return output;
 
   }
 
-  
+
   public getLocation() {
     this.geolocation.getCurrentPosition().then((resp) => {
       // resp.coords.latitude
       // resp.coords.longitude
       let temp: string = "geo" + ":" + resp.coords.latitude + "," + resp.coords.longitude;
-     // this.buildAndSendMessage(temp);
-     this.buildAndSendMessage(temp);
+      // this.buildAndSendMessage(temp);
+      this.buildAndSendMessage(temp);
     }).catch((error) => {
       console.log('Error getting location', error);
     });
