@@ -43,8 +43,6 @@ export class HomePage {
 
    
       command = this.currentMessage.split(" ");
-    
-    
    let i=0;
     while ( i < command.length) {
 
