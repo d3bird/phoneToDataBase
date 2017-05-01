@@ -36,6 +36,12 @@ export class HomePage {
   public getImageFromMessageContent(message: Message) {
     return this.doesThisMessageContainAnImage(message) ? message.messageContent : "";
   }
+
+public randomTest(){
+
+
+}
+
   public getPhoto() {
 
     const options: CameraOptions = {
